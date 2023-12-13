@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+#define THREAD_DURATION 4
+
 class Worker : public QObject
 {
     Q_OBJECT
@@ -11,6 +13,7 @@ public slots:
     void doWork();
 
 signals:
+    void workStarted();
     void workFinished();
 };
 ///hejka

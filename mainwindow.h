@@ -25,12 +25,15 @@ public:
 
 public slots:
     void startWork();
+    void onWorkStarted();
     void onWorkFinished();
 
 private:
     Ui::MainWindow *ui;
-    Worker worker;
-    QThread workerThread;
+    Worker worker[4];
+    QThread workerThread[4];
+    int currentWorkerIndex = 0;
+    void runNextWorker();
 };
 
 #endif // MAINWINDOW_H

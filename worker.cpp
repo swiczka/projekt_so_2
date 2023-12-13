@@ -1,14 +1,21 @@
+#pragma once
+
 #include "worker.h"
 
 #include <QThread>
 #include <QDebug>
+#include <chrono>
+#include <thread>
 
 void Worker::doWork()
 {
-    for (int i = 0; i < 5; ++i) {
-        qDebug() << "Wykonuję pracę..." << i;
+    emit workStarted();
+
+    for (int i = 0; i < THREAD_DURATION; ++i) {
+        qDebug() << "Wątek wykonuje pracę..." << i;
             QThread::sleep(1);  // Symulacja pracy
     }
 
     emit workFinished();
 }
+
