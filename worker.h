@@ -13,6 +13,6 @@ public slots:
 signals:
     void workFinished();
 };
-
+///hejka
 #endif // WORKER_H
 
