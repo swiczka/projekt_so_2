@@ -27,7 +27,7 @@ public slots:
     void startWork();
     void onWorkStarted();
     void onWorkFinished();
-
+    void handleWorkFinished();
 private:
     Ui::MainWindow *ui;
     Worker worker[4];

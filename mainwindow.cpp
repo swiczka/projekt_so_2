@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->startWorkButton, &QPushButton::clicked, this, &MainWindow::startWork);
     //connect(ui->stopThreadButton, &QPushButton::clicked, &worker[currentWorkerIndex], &Worker::workFinished);
+    connect(&worker[3], &Worker::workFinished, this, &MainWindow::handleWorkFinished);
 
     for (int i = 0; i < 4; i++){
         connect(&worker[i], &Worker::workFinished, this, &MainWindow::onWorkFinished);
@@ -78,3 +79,18 @@ void MainWindow::runNextWorker()
         workerThread[currentWorkerIndex].start();
     }
 }
+
+void MainWindow::handleWorkFinished(){
+
+    qDebug()<<"Wszystkie watki zakonczone. Aktualizuje ...";
+    qDebug()<<"Tu bedzie rozwiazywal problem!!!";
+}
+
+
+
+
+
+
+
+
+
