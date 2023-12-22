@@ -15,6 +15,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     for (int i = 0; i < 4; i++){
         connect(&worker[i], &Worker::workFinished, this, &MainWindow::onWorkFinished);
+        //////????//////
+        connect(&worker[i], &Worker::workFinished, this, &MainWindow::onWorkFinishedMainWindow);
+        /////????//////
         connect(&worker[i], &Worker::workStarted, this, &MainWindow::onWorkStarted);
         worker[i].moveToThread(&workerThread[i]);
     }
@@ -84,6 +87,16 @@ void MainWindow::handleWorkFinished(){
 
     qDebug()<<"Wszystkie watki zakonczone. Aktualizuje ...";
     qDebug()<<"Tu bedzie rozwiazywal problem!!!";
+}
+/////////MOGA BYC BREDNIE!!!!////////////
+void MainWindow::onWorkFinishedMainWindow(){
+    QString message = "Zakończono wykonywanie wątku " + QString::number(currentWorkerIndex);
+
+    // Dodaj nową linię za każdym razem, gdy zakończony zostanie wątek
+    ui->textBrowserMain->append(message);
+
+    currentWorkerIndex++;
+    runNextWorker();
 }
 
 
