@@ -15,6 +15,8 @@ public slots:
 signals:
     void workStarted();
     void workFinished();
+private:
+    int qrand();
 };
 ///hejka
 #endif // WORKER_H

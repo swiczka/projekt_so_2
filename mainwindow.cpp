@@ -3,7 +3,6 @@
 #include "ui_mainwindow.h"
 #include <chrono>
 #include <thread>
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -14,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&worker[3], &Worker::workFinished, this, &MainWindow::handleWorkFinished);
 
     for (int i = 0; i < 4; i++){
-        connect(&worker[i], &Worker::workFinished, this, &MainWindow::onWorkFinished);
+        //connect(&worker[i], &Worker::workFinished, this, &MainWindow::onWorkFinished);
         //////????//////
         connect(&worker[i], &Worker::workFinished, this, &MainWindow::onWorkFinishedMainWindow);
         /////????//////
@@ -90,7 +89,7 @@ void MainWindow::handleWorkFinished(){
 }
 /////////MOGA BYC BREDNIE!!!!////////////
 void MainWindow::onWorkFinishedMainWindow(){
-    QString message = "Zakończono wykonywanie wątku " + QString::number(currentWorkerIndex);
+    QString message = "Zakończono wykonywanie wątku " + QString::number(currentWorkerIndex+1);
 
     // Dodaj nową linię za każdym razem, gdy zakończony zostanie wątek
     ui->textBrowserMain->append(message);
