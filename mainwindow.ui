@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>539</width>
-    <height>497</height>
+    <width>503</width>
+    <height>530</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QPushButton" name="startWorkButton">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>420</y>
+      <x>410</x>
+      <y>460</y>
       <width>80</width>
       <height>24</height>
      </rect>
@@ -30,8 +30,8 @@
    <widget class="QLabel" name="infoLabel">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>60</y>
+      <x>10</x>
+      <y>140</y>
       <width>301</width>
       <height>151</height>
      </rect>
@@ -43,10 +43,10 @@
    <widget class="QFrame" name="threadFrame_1">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>80</y>
+      <x>10</x>
+      <y>160</y>
       <width>481</width>
-      <height>51</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -61,7 +61,7 @@
        <x>0</x>
        <y>0</y>
        <width>481</width>
-       <height>51</height>
+       <height>41</height>
       </rect>
      </property>
     </widget>
@@ -69,10 +69,10 @@
    <widget class="QFrame" name="threadFrame_2">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>160</y>
+      <x>10</x>
+      <y>240</y>
       <width>481</width>
-      <height>51</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -87,7 +87,7 @@
        <x>0</x>
        <y>0</y>
        <width>481</width>
-       <height>51</height>
+       <height>41</height>
       </rect>
      </property>
     </widget>
@@ -95,10 +95,10 @@
    <widget class="QFrame" name="threadFrame_3">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>240</y>
+      <x>10</x>
+      <y>320</y>
       <width>481</width>
-      <height>51</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -113,7 +113,7 @@
        <x>0</x>
        <y>0</y>
        <width>481</width>
-       <height>51</height>
+       <height>41</height>
       </rect>
      </property>
     </widget>
@@ -121,10 +121,10 @@
    <widget class="QFrame" name="threadFrame_4">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>320</y>
+      <x>10</x>
+      <y>400</y>
       <width>481</width>
-      <height>51</height>
+      <height>41</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -139,7 +139,7 @@
        <x>0</x>
        <y>0</y>
        <width>481</width>
-       <height>51</height>
+       <height>41</height>
       </rect>
      </property>
     </widget>
@@ -147,8 +147,8 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>60</y>
+      <x>10</x>
+      <y>140</y>
       <width>81</width>
       <height>21</height>
      </rect>
@@ -160,8 +160,8 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>140</y>
+      <x>10</x>
+      <y>220</y>
       <width>81</width>
       <height>21</height>
      </rect>
@@ -173,8 +173,8 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>220</y>
+      <x>10</x>
+      <y>300</y>
       <width>81</width>
       <height>21</height>
      </rect>
@@ -186,8 +186,8 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>300</y>
+      <x>10</x>
+      <y>380</y>
       <width>81</width>
       <height>21</height>
      </rect>
@@ -199,10 +199,10 @@
    <widget class="QFrame" name="threadFrameMain">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>0</y>
+      <x>10</x>
+      <y>40</y>
       <width>481</width>
-      <height>61</height>
+      <height>81</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -217,7 +217,7 @@
        <x>0</x>
        <y>0</y>
        <width>481</width>
-       <height>61</height>
+       <height>81</height>
       </rect>
      </property>
     </widget>
@@ -228,7 +228,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>539</width>
+     <width>503</width>
      <height>21</height>
     </rect>
    </property>

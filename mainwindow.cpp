@@ -1,26 +1,22 @@
 #include "mainwindow.h"
-#include "qapplication.h"
 #include "ui_mainwindow.h"
-#include <chrono>
-#include <thread>
+#include <QRandomGenerator>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
     connect(ui->startWorkButton, &QPushButton::clicked, this, &MainWindow::startWork);
-    //connect(ui->stopThreadButton, &QPushButton::clicked, &worker[currentWorkerIndex], &Worker::workFinished);
-    connect(&worker[3], &Worker::workFinished, this, &MainWindow::handleWorkFinished);
 
     for (int i = 0; i < 4; i++){
-        //connect(&worker[i], &Worker::workFinished, this, &MainWindow::onWorkFinished);
-        //////????//////
-        connect(&worker[i], &Worker::workFinished, this, &MainWindow::onWorkFinishedMainWindow);
-        /////????//////
+
+        connect(&worker[i], &Worker::workFinished, this, &MainWindow::onWorkFinished);
         connect(&worker[i], &Worker::workStarted, this, &MainWindow::onWorkStarted);
         worker[i].moveToThread(&workerThread[i]);
     }
 }
+
 
 MainWindow::~MainWindow()
 {
@@ -34,75 +30,99 @@ MainWindow::~MainWindow()
 
 void MainWindow::startWork()
 {
+    ui->startWorkButton->hide();
+    int workerTimes[4] = {0, 0, 0, 0};
+
+    for(int j = 0; j < 4; j++){
+        bool ok = false;
+
+        while(!ok){
+            int newNumber = QRandomGenerator::global()->bounded(1, 8);
+            ok = true;
+            for(int i = 0; i < 4; i++){
+                if(workerTimes[i] == newNumber){
+                    ok = false;
+                    break;
+                }
+            }
+            if (ok)
+                workerTimes[j] = newNumber;
+        }
+    }
+
+    // wyznaczanie wątku o maksymalnym czasie pracy
+
+    int maxTimeIndex = 0;
+    int maxDuration = 0;
+
+    for(int i = 0; i < 4; i++){
+
+        if(maxDuration < workerTimes[i]){
+            maxTimeIndex = i;
+            maxDuration = workerTimes[i];
+        }
+
+
+        qDebug() << workerTimes[i];
+        worker[i].workTime = workerTimes[i];
+        worker[i].workerIndex = i;
+    }
+    qDebug() << "Index: " << maxTimeIndex;
+    connect(&worker[maxTimeIndex], &Worker::workFinished, this, &MainWindow::handleWorkFinished);
+
     runNextWorker();
 }
 
-void MainWindow::onWorkStarted(){
-    switch(currentWorkerIndex){
+void MainWindow::onWorkStarted(int index){
+    QString message = "Wykonywanie wątku " + QString::number(index + 1);
+
+    switch(index){
     case 0:
-        ui->textBrowser_1->setText("Wykonywanie wątku " + QString::number(currentWorkerIndex + 1));
+        ui->textBrowser_1->setText(message);
         break;
     case 1:
-        ui->textBrowser_2->setText("Wykonywanie wątku " + QString::number(currentWorkerIndex + 1));
+        ui->textBrowser_2->setText(message);
         break;
     case 2:
-        ui->textBrowser_3->setText("Wykonywanie wątku " + QString::number(currentWorkerIndex + 1));
+        ui->textBrowser_3->setText(message);
         break;
     case 3:
-        ui->textBrowser_4->setText("Wykonywanie wątku " + QString::number(currentWorkerIndex + 1));
+        ui->textBrowser_4->setText(message);
         break;
     }
 }
 
-void MainWindow::onWorkFinished()
+void MainWindow::onWorkFinished(int index)
 {
-    switch(currentWorkerIndex){
+    QString message = "Zakończono wykonywanie wątku " + QString::number(index + 1);
+    ui->textBrowserMain->append(message);
+
+    switch(index){
+
     case 0:
-        ui->textBrowser_1->setText("Zakończono wykonywanie wątku " + QString::number(currentWorkerIndex + 1));
+        ui->textBrowser_1->setText(message);
         break;
     case 1:
-        ui->textBrowser_2->setText("Zakończono wykonywanie wątku " + QString::number(currentWorkerIndex + 1));
+        ui->textBrowser_2->setText(message);
         break;
     case 2:
-        ui->textBrowser_3->setText("Zakończono wykonywanie wątku " + QString::number(currentWorkerIndex + 1));
+        ui->textBrowser_3->setText(message);
         break;
     case 3:
-        ui->textBrowser_4->setText("Zakończono wykonywanie wątku " + QString::number(currentWorkerIndex + 1));
+        ui->textBrowser_4->setText(message);
         break;
     }
-    currentWorkerIndex++;
-    runNextWorker();
 }
 
 void MainWindow::runNextWorker()
 {
-    if(currentWorkerIndex < 4){
-        QMetaObject::invokeMethod(&worker[currentWorkerIndex], "doWork", Qt::QueuedConnection);
-        workerThread[currentWorkerIndex].start();
+    for(int i = 0; i < 4; i++){
+        QMetaObject::invokeMethod(&worker[i], "doWork", Qt::QueuedConnection);
+        workerThread[i].start();
     }
 }
 
 void MainWindow::handleWorkFinished(){
-
+    ui->textBrowserMain->append("Wszystkie wątki zakończone!");
     qDebug()<<"Wszystkie watki zakonczone. Aktualizuje ...";
-    qDebug()<<"Tu bedzie rozwiazywal problem!!!";
 }
-/////////MOGA BYC BREDNIE!!!!////////////
-void MainWindow::onWorkFinishedMainWindow(){
-    QString message = "Zakończono wykonywanie wątku " + QString::number(currentWorkerIndex+1);
-
-    // Dodaj nową linię za każdym razem, gdy zakończony zostanie wątek
-    ui->textBrowserMain->append(message);
-
-    currentWorkerIndex++;
-    runNextWorker();
-}
-
-
-
-
-
-
-
-
-

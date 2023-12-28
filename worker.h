@@ -2,22 +2,29 @@
 #define WORKER_H
 
 #include <QObject>
-
-#define THREAD_DURATION 4
+#include <QMutex>
 
 class Worker : public QObject
 {
     Q_OBJECT
 
+private:
+    QMutex *mutex;
+
+public:
+    Worker();
+    ~Worker();
+    int workTime;
+    int workerIndex;
+
 public slots:
     void doWork();
 
 signals:
-    void workStarted();
-    void workFinished();
-private:
-    int qrand();
+    void workStarted(int index);
+    void workFinished(int index);
+
 };
-///hejka
+
 #endif // WORKER_H
 

@@ -4,20 +4,36 @@
 
 #include <QThread>
 #include <QDebug>
-#include <chrono>
-#include <thread>
-#include <QRandomGenerator>
+
+Worker::Worker()
+{
+    mutex = new QMutex();
+}
+
+Worker::~Worker()
+{
+    delete mutex;
+}
+
 void Worker::doWork()
 {
-    emit workStarted();
+    mutex->lock();
+    //      SEKCJA KRYTYCZNA
+    emit workStarted(workerIndex);
+    //      KONIEC SEKCJI KRYTYCZNEJ
+    mutex->unlock();
 
-    for (int i = 0; i < THREAD_DURATION; ++i) {
-        qDebug() << "Wątek wykonuje pracę..." << i;
-            int sleepTime = QRandomGenerator::global()->bounded(1, 6);
-        qDebug()<<"wykonuje prace przez:"<<sleepTime<<"sekundy";
-            QThread::sleep(sleepTime);  // Symulacja pracy
+    qDebug()<<"Wątek" << workerIndex + 1 << "wykonuje prace przez:"<< workTime <<"sekundy";
+
+    for (int i = 0; i < workTime; ++i) {
+        qDebug() << "Wątek" << workerIndex + 1 << "wykonuje pracę..." << i;
+        QThread::sleep(1);
     }
 
-    emit workFinished();
+    mutex->lock();
+    //      SEKCJA KRYTYCZNA
+    emit workFinished(workerIndex);
+    //      KONIEC SEKCJI KRYTYCZNEJ
+    mutex->unlock();
 }
 
