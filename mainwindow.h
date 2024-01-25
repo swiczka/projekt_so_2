@@ -33,7 +33,7 @@ private:
     Ui::MainWindow *ui;
     Worker worker[4];
     QThread workerThread[4];
-    void runNextWorker();
+    void runWorkers();
 };
 
 #endif // MAINWINDOW_H

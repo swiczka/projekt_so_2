@@ -8,6 +8,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     connect(ui->startWorkButton, &QPushButton::clicked, this, &MainWindow::startWork);
+    this->setWindowTitle("Program wielowątkowy");
+    this->setFixedSize(500, 550);
+    this->ui->spinBox->setMinimum(1);
+    this->ui->spinBox_2->setMinimum(5);
 
     for (int i = 0; i < 4; i++){
 
@@ -21,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     for(int i = 0; i < 4; i++){
+        qDebug() << "Zamykanie wątku " << i;
         workerThread[i].quit();
         workerThread[i].wait();
     }
@@ -30,6 +35,13 @@ MainWindow::~MainWindow()
 
 void MainWindow::startWork()
 {
+    ui->textBrowserMain->clear();
+    if(ui->spinBox_2->value() - ui->spinBox->value() < 4){
+        ui->textBrowserMain->append("Różnica między max a min musi wnynosić co najmniej 4!");
+        return;
+    }
+    ui->spinBox->setDisabled(true);
+    ui->spinBox_2->setDisabled(true);
     ui->startWorkButton->hide();
     int workerTimes[4] = {0, 0, 0, 0};
 
@@ -37,7 +49,7 @@ void MainWindow::startWork()
         bool ok = false;
 
         while(!ok){
-            int newNumber = QRandomGenerator::global()->bounded(1, 8);
+            int newNumber = QRandomGenerator::global()->bounded(ui->spinBox->value(), ui->spinBox_2->value());
             ok = true;
             for(int i = 0; i < 4; i++){
                 if(workerTimes[i] == newNumber){
@@ -70,7 +82,7 @@ void MainWindow::startWork()
     qDebug() << "Index: " << maxTimeIndex;
     connect(&worker[maxTimeIndex], &Worker::workFinished, this, &MainWindow::handleWorkFinished);
 
-    runNextWorker();
+    runWorkers();
 }
 
 void MainWindow::onWorkStarted(int index){
@@ -114,7 +126,7 @@ void MainWindow::onWorkFinished(int index)
     }
 }
 
-void MainWindow::runNextWorker()
+void MainWindow::runWorkers()
 {
     for(int i = 0; i < 4; i++){
         QMetaObject::invokeMethod(&worker[i], "doWork", Qt::QueuedConnection);
